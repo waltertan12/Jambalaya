@@ -1,0 +1,15 @@
+{
+  "name": "jambalya",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "test": "echo uh"
+  },
+  "author": "Walter Tan <waltertan12@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.2",
+    "ws": "^3.0.0"
+  }
+}
