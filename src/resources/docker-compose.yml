@@ -1,10 +1,8 @@
 version: '2'
 services:
-  cassandra:
-    image: library/cassandra:3.11.0
-    container_name: jambalaya-cassandra
+  postgres:
+    image: postgres
+    container_name: jambalaya-postgres
     ports:
-      - "7000:7000"
-      - "9042:9042"
-    environment:
-      CASSANDRA_BROADCAST_ADDRESS: dockerhost
+      - "5432:5432"
+

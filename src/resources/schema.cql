@@ -1,15 +1,14 @@
 
-CREATE KEYSPACE IF NOT EXISTS jambalaya WITH REPLICATION = { 'class': 'SimpleStrategy', 'replication_factor': 1 };
+CREATE DATABASE IF NOT EXISTS jambalaya;
 
-USE jambalaya;
-
-CREATE TABLE IF NOT EXISTS users (
-  id uuid,
-  username text,
-  password text,
-  roles list<text>,
-  email text,
-  join_date timestamp,
-  last_modified timestamp,
-  primary key ((id))
+CREATE TABLE IF NOT EXISTS jambalaya.USERS(
+    id INT,
+    username TEXT,
+    password TEXT,
+    email TEXT,
+    roles TEXT, 
+    join_date TIMESTAMP, 
+    last_modified TIMESTAMP,
+    PRIMARY KEY( id )
 );
+
