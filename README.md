@@ -2,92 +2,89 @@
 Jambalaya is an app that simplifies decision making with brackets
 
 ## Schema
-```
-User
+### User
+| Column Name     | Data Type | Notes       |
+|-----------------|-----------|-------------|
+| id              | INT       | Primary key |
+| email           | VARCHAR   | Unique key  |
+| password_digest | VARCHAR   |             |
+| user_type       | INT       |             |
+| created_date    | DATETIME  |             |
+| modified_date   | DATETIME  |             |
 
-COLUMN         TYPE
-id             INT
-email          VARCHAR
-passwordDigest VARCHAR
-userType       VARCHAR   DEFAULT 'user'
-createdDate    DATETIME
-modifiedDate   DATETIME
-```
+### UserAttribute
+| Column Name     | Data Type | Notes       |
+|-----------------|-----------|-------------|
+| id              | INT       | Primary key |
+| user_id         | INT       | Foreign key |
+| attribute_name  | VARCHAR   |             |
+| attribute_value | VARCHAR   |             |
+| created_date    | DATETIME  |             |
+| modified_date   | DATETIME  |             |
 
-```
-UserAttribute
+### Player
+| Column Name     | Data Type | Notes       |
+|-----------------|-----------|-------------|
+| id              | INT       | Primary key |
+| name            | VARCHAR   |             |
 
-COLUMN         TYPE
-id             INT
-userId         INT       References User.id
-attributeName  VARCHAR
-attributeValue VARCHAR
-createdDate    DATETIME
-modifiedDate   DATETIME
-```
+### PlayerAttribute
+| Column Name     | Data Type | Notes       |
+|-----------------|-----------|-------------|
+| id              | INT       | Primary key |
+| player_id       | INT       | Foreign key |
+| attribute_name  | VARCHAR   |             |
+| attribute_value | VARCHAR   |             |
+| created_date    | DATETIME  |             |
+| modified_date   | DATETIME  |             |
 
-```
-Team
-This can be a restaurant or an activity
+Planning to use this table to store Google Place API data or Yelp API data
 
-COLUMN         TYPE
-id             INT
-name           VARCHAR
-pointsFor      INT
-pointsAgainst  INT
-createdDate    DATETIME
-modifiedDate   DATETIME
-```
+### Tournament
+| Column Name       | Data Type | Notes       |
+|-------------------|-----------|-------------|
+| id                | INT       | Primary key |
+| number_of_rounds  | INT       |             |
 
-```
-TeamAttribute
+### TournamentType
+| Column Name       | Data Type | Notes       |
+|-------------------|-----------|-------------|
+| id                | INT       | Primary key |
+| tournament_type   | VARCHAR   |             |
 
-COLUMN          TYPE
-id              INT
-teamId          INT      References team.id
-attributeName   VARCHAR
-attributeValue  VARCHAR
-createdDate     DATETIME
-modifiedDate    DATETIME
+Not necessary yet but might be able to support more than just single elimination
 
-UNIQUE KEY (playerId, attributeName)
-```
+### Registration
+| Column Name       | Data Type | Notes       |
+|-------------------|-----------|-------------|
+| id                | INT       | Primary key |
+| player_id         | INT       | Foreign key |
+| registration_date | DATETIME  |             |
 
-```
-Tournament
+### PlayingIn
+| Column Name       | Data Type | Notes       |
+|-------------------|-----------|-------------|
+| id                | INT       | Primary key |
+| registration_id   | INT       | Foreign key |
+| seed              | INT       |             |
 
-COLUMN         TYPE
-id             INT
-tournamentType VARCHAR
-createdDate    DATETIME
-modifiedDate   DATETIME
-```
+Decouples player from the tournament. Allows us to keep track of how often a player is used in tournaments.
 
-```
-Round
+### Fixture
+| Column Name                | Data Type | Notes       |
+|----------------------------|-----------|-------------|
+| id                         | INT       | Primary key |
+| first_registration_id      | INT       | Foreign key |
+| second_registration_id     | INT       | Foreign key |
+| round                      | INT       |             |
+| first_registration_points  | INT       |             | 
+| second_registration_points | INT       |             | 
 
-COLUMN         TYPE
-id             INT
-tournamentId   INT      References Tournament.id
-roundNumber    INT
-status         VARCHAR
-createdDate    DATETIME
-modifiedDate   DATETIME
-```
-
-```
-Match
-
-COLUMN         TYPE
-id             INT
-roundId        INT      References Round.id
-teamOneId      INT      References Team.id
-teamTwoId      INT      References Team.id
-teamOneScore   INT
-teamTwoScore   INT
-createdDate    DATETIME
-modifiedDate   DATETIME
-```
+### FixtureResult
+| Column Name                | Data Type | Notes       |
+|----------------------------|-----------|-------------|
+| id                         | INT       | Primary key |
+| winning_registration_id    | INT       | Foreign key |
 
 ## Services
 Would like to something slightly more different than normal MVC since I seemed to struggled with keeping domain logic in the model in the Timeline app
