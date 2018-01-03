@@ -1,0 +1,12 @@
+version: '3'
+services:
+  postgres:
+    image: postgres
+    restart: always
+  backend:
+    build: ./backend
+    depends_on:
+      - postgres
+    volumes:
+      - ./backend:/backend
+
